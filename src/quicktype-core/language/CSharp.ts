@@ -466,7 +466,17 @@ export class CSharpRenderer extends ConvenienceRenderer {
                 if (columns.length > 0) {
                     this.emitTable(columns);
                 }
+
+                this.emitToString();
             }
+        );
+    }
+
+    private emitToString(): void {
+        this.ensureBlankLine();
+        this.emitExpressionMember(
+            ["override public ", "string", " ToString()"],
+            ["JsonConvert.SerializeObject", "(this, ", this._csOptions.namespace, ".Converter.Settings)"]
         );
     }
 
